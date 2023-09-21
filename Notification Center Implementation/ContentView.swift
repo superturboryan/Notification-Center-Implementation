@@ -46,13 +46,13 @@ struct ContentView: View {
             }
             Spacer()
         }
-        .onReceive(NotifCenter.default.publisher(.Increment1), perform: { _ in
+        .onReceive(NotifCenter.default.publisher(for: .Increment1), perform: { _ in
             counter1 += 1
         })
-        .onReceive(NotifCenter.default.publisher(.Increment2), perform: { _ in
+        .onReceive(NotifCenter.default.publisher(for: .Increment2), perform: { _ in
             counter2 += 2
         })
-        .onReceive(NotifCenter.default.publisher(.Decrement), perform: { value in
+        .onReceive(NotifCenter.default.publisher(for: .Decrement), perform: { value in
             if let value = value as? Int {
                 counter1 -= value
                 counter2 -= value

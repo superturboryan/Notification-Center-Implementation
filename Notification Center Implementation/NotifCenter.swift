@@ -9,18 +9,17 @@ import Combine
 import Foundation
 
 class NotifCenter {
+    private init() {}
     static let `default` = NotifCenter()
     
     private var publishers = [NotifName : PassthroughSubject<Any?, Never>]()
     private var subscriptions = Set<AnyCancellable>()
     
-    func publisher(_ name: NotifName) -> AnyPublisher<Any?, Never> {
+    func publisher(for name: NotifName) -> AnyPublisher<Any?, Never> {
         if publishers[name] == nil {
             publishers[name] = PassthroughSubject<Any?, Never>()
         }
-        return publishers
-            .first(where: { $0.key == name })!.value
-            .eraseToAnyPublisher()
+        return publishers[name]!.eraseToAnyPublisher()
     }
     
     func postNotification(_ name: NotifName, _ object: Any? = nil) {
